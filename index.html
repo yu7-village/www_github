@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ごった煮へようこそ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="side-nav" aria-label="サイト内目次">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="features.html">短波受信機</a></li>
+        <li><a href="site.html">カメラ</a></li>
+        <li><a href="links.html">リンク</a></li> <!-- リンクページへのリンク -->
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container hero-inner">
+        <h2>ごった煮</h2>
+        <p>ごった煮ホームページへようこそ</p>
+        <!-- 以下のボタンを削除しました -->
+        <!-- <a class="btn" href="#site">サイト情報を見る</a> -->
+      </div>
+    </section>
+
+    <section id="features" class="container features">
+      <h3>特徴</h3>
+      <div class="grid">
+        <article class="card">
+          <h4>短波受信機</h4>
+          <p>疑似受信機でCW受信できます。</p>
+        </article>
+        <article class="card">
+          <h4>カメラ</h4>
+          <p>Liveカメラです。</p>
+        </article>
+        <article class="card">
+          <h4>軽量</h4>
+          <p>読み込みが速く、基本的なSEOにも配慮。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="site" class="container site-info">
+      <h3>サイト情報</h3>
+      <p>興味のあることを書き散らすサイトです</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> サイト名. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // フッターの年表示と、モバイル時にサイドナビをトグルする処理
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toggle = document.querySelector('.menu-toggle');
+    const sideNav = document.querySelector('.side-nav');
+    const heroH2 = document.querySelector('.hero h2');
+
+    toggle.addEventListener('click', () => sideNav.classList.toggle('open'));
+
+    // サイドナビを hero の見出し（"シンプルで使いやすいホームページ"）の位置まで下げる
+    function alignSideNavToHero(){
+      if (!sideNav || !heroH2) return;
+      const rect = heroH2.getBoundingClientRect();
+      sideNav.style.top = Math.max(0, Math.round(rect.top)) + 'px';
+    }
+
+    window.addEventListener('load', alignSideNavToHero);
+    window.addEventListener('resize', alignSideNavToHero);
+  </script>
+</body>
+</html>

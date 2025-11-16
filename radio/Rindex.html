@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Superheterodyne CW Receiver Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            /* ★★★ 修正箇所: 上下のパディングを20pxから7pxに減らす (約1/3) ★★★ */
+            padding: 7px 20px; 
+        }
+
+        /* 全体のコントロールグループ */
+        .control-group {
+            margin-bottom: 20px;
+            padding: 15px; /* 標準のパディング */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        /* BFOパネルの縦幅を縮小 */
+        .control-group.bfo-control {
+            padding: 10px 15px; 
+        }
+        .control-group h3 {
+            margin-top: 0;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 5px;
+        }
+
+        /* コントロールグループを横並びにするコンテナ */
+        .control-flex-container {
+            display: flex; /* 子要素（control-group）を横に並べる */
+            gap: 20px; /* コントロールグループ間の隙間 */
+            flex-wrap: wrap; 
+            margin-bottom: 20px; /* BFOパネルとの間にマージンを取る */
+        }
+        .control-flex-container .control-group {
+            flex: 1; /* 利用可能なスペースを均等に分割 */
+            min-width: 300px; /* 最小幅を設定 */
+            margin-bottom: 0; 
+        }
+
+
+        /* VFO/周波数表示エリアのスタイル */
+        #vfoArea {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #556B2F;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        /* 受信開始/停止ボタンのスタイル */
+        #startStopButton {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 250px;
+            padding: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        #startStopButton:hover {
+            background-color: #c9302c;
+        }
+
+        /* 周波数表示コンテナ */
+        #freqDisplayContainer {
+            flex-shrink: 0;
+            width: 300px;
+        }
+
+        /* デジタル表示 */
+        #freqDisplayBox {
+            height: 60px;
+            padding: 5px 10px;
+            border: 2px solid #000;
+            background-color: #000;
+            text-align: right;
+            border-radius: 4px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        #vfoDisplay {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #00ff66;
+            display: block;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+        #vfoTuneValue {
+            font-size: 0.8em;
+            color: #ccc;
+            display: block;
+        }
+        .freq-label {
+            color: #aaa;
+            font-size: 0.7em;
+            margin-bottom: 5px;
+        }
+
+        /* アナログ周波数表示エリア */
+        #analogDisplay {
+            width: 100%;
+            height: 60px;
+            background-color: #e0e0e0;
+            border: 1px solid #333;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+            --analog-shift: 0px;
+        }
+
+        /* 目盛り線（ダミーの背景として使用） - 動く部分 */
+        #analogDisplay::before {
+            content: '||||| ||||| ||||| ||||| ||||| ||||| ||||| ||||| |||||';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(calc(-50% + var(--analog-shift)));
+            font-size: 14px;
+            letter-spacing: 10px;
+            color: #333;
+            white-space: nowrap;
+            opacity: 0.6;
+            transition: none;
+            
+            /* 7.000MHz (中央) の目盛りを5px幅の黒線にする */
+            background-image: linear-gradient(to right, 
+                transparent 49.0%, 
+                #000 49.0%, 
+                #000 51.0%, 
+                transparent 51.0%);
+            background-size: 100% 100%;
+            height: 100%;
+            width: 200%;
+            text-align: center;
+            line-height: 2;
+        }
+
+        /* 7.000MHz の数値表示 (目盛りと一緒に移動) */
+        #centerFreqLabel {
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(calc(-50% + var(--analog-shift)));
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            white-space: nowrap;
+        }
+        
+        /* ポインター（固定） */
+        #analogPointer {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background-color: red;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.8);
+            z-index: 11;
+        }
+        
+        /* CWステータスランプのコンテナ */
+        #cwStatusContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 10px;
+            flex-shrink: 0;
+            gap: 5px;
+        }
+        #cwStatusContainer p {
+            margin: 0;
+            font-size: 0.8em;
+            color: #eee;
+        }
+
+        /* 受信状態ランプ */
+        #cwStatus {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: block;
+            background-color: gray;
+            margin: 0;
+            transition: background-color 0.1s;
+            border: 1px solid #000;
+        }
+        .cw-on {
+            background-color: #0f0 !important;
+            box-shadow: 0 0 10px #0f0;
+        }
+        
+        /* VFOダイヤル（立体感と色） */
+        #vfoDialContainer {
+            flex-grow: 1;
+            text-align: right;
+        }
+        #vfoDial {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-image: linear-gradient(to bottom right, #666 0%, #333 100%);
+            border: 8px solid #222;
+            cursor: grab;
+            position: relative;
+            margin: 0 0 0 auto;
+            transform: rotate(0deg);
+            user-select: none;
+            box-shadow: 
+                inset 0 0 15px rgba(0, 0, 0, 0.8),
+                0 5px 15px rgba(0, 0, 0, 0.6),
+                0 -2px 5px rgba(255, 255, 255, 0.1) inset;
+            transition: all 0.05s ease-out;
+        }
+        #vfoDial:active {
+            cursor: grabbing;
+            box-shadow: 
+                inset 0 0 20px rgba(0, 0, 0, 0.9),
+                0 2px 8px rgba(0, 0, 0, 0.5);
+            transform: rotate(var(--dial-rotation, 0deg)) scale(0.98);
+        }
+        /* ポインター/マーカー線 */
+        #vfoDial::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 25px;
+            background-color: red;
+            border-radius: 3px;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+
+        /* モールス符号入力フィールドの修正CSS (横スクロールを有効化) */
+        #textInput, #intTextInput {
+            /* textareaを一行のinputに見せるための設定 */
+            resize: none; 
+            overflow-y: hidden; /* 垂直スクロールは非表示 */
+            white-space: nowrap; /* テキストの折り返しを禁止 */
+            overflow-x: auto; /* 横方向のスクロールを有効にする */
+            width: 250px; /* 固定幅 */
+            height: 30px; 
+            line-height: 1.5;
+            padding: 5px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* スクロールバー非表示 */
+        #textInput::-webkit-scrollbar, 
+        #intTextInput::-webkit-scrollbar {
+            display: none;
+        }
+        #textInput {
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        #intTextInput {
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+
+        /* WPMコントロールのレイアウト安定化 */
+        .wpm-control {
+            display: flex; /* 子要素を横に並べる */
+            align-items: center; /* 垂直方向中央揃え */
+            gap: 10px; /* 要素間の隙間 */
+            margin-bottom: 10px; /* 下に少しスペースを空ける */
+        }
+        .wpm-control input[type="range"] {
+            width: 150px; /* スライダーの幅を固定して、親要素を超えないようにする */
+        }
+    </style>
+</head>
+<body>
+    <h1>スーパーヘテロダイン CW受信機シミュレータ</h1>
+    <hr>
+
+    <div id="vfoArea">
+        
+        <div id="freqDisplayContainer">
+            <div id="freqDisplayBox">
+                <div class="freq-label">Frequency (kHz)</div>
+                <span id="vfoDisplay">7.000.000</span>
+                <span id="vfoTuneValue">Offset: 0.0 kHz</span>
+            </div>
+            
+            <div id="analogDisplay">
+                <div id="analogPointer"></div>
+                <div id="centerFreqLabel">7.000</div> 
+            </div>
+
+        </div>
+
+        <div id="cwStatusContainer">
+            <p>CW Rx Status</p>
+            <span id="cwStatus"></span>
+        </div>
+
+        <div id="vfoDialContainer">
+            <h3>VFO (Tuning Knob)</h3>
+            <div id="vfoDial"></div>
+        </div>
+
+        <button id="startStopButton">受信開始</button>
+    </div>
+    
+    <hr>
+    
+    <div class="control-flex-container">
+        
+        <div class="control-group">
+            <h3>周波数１ (7.000 MHz 相当)</h3>
+            <p>モールス符号:</p>
+            <textarea id="textInput" rows="1" cols="30">CQ CQ CQ TST DE JA10UC/3 JA10UC/3 JA10UC/3 K</textarea>
+            
+            <p class="wpm-control">
+                <span>WPM: <span id="wpmValue">20</span></span>
+                <input type="range" id="wpmSlider" min="5" max="40" value="20" step="1">
+            </p>
+            
+            <p>キーイング状態: <span id="morseQueueDisplay">---</span></p>
+            <button id="setMorseButton">ターゲット信号をリセット/更新</button>
+        </div>
+
+        <div class="control-group">
+            <h3>周波数２ (7.0030 MHz 相当)</h3>
+            <p>モールス符号:</p>
+            <textarea id="intTextInput" rows="1" cols="30">BK　*ほれ*　おはようございます　599でかんとうにとどいています　こちらのてんきは　はれ　はれ　です　</textarea>
+            
+            <p class="wpm-control">
+                <span>WPM: <span id="intWpmValue">15</span></span>
+                <input type="range" id="intWpmSlider" min="5" max="40" value="15" step="1">
+            </p>
+            
+            <p>※ 干渉信号は受信開始時にキューが生成されます。</p>
+        </div>
+
+    </div>
+
+    <div class="control-group bfo-control">
+        <h3>ビート発振器設定 (BFO)</h3>
+        <label for="bfoFreq">BFO トーンオフセット (<span id="bfoValue">700</span> Hz):</label>
+        <input type="range" id="bfoFreq" min="300" max="1500" value="700" step="50">
+        <p>※ IFフィルターは455kHzに固定、帯域は1.0kHzです。</p>
+    </div>
+    
+    <script src="superhet.js"></script>
+</body>
+</html>
