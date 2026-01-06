@@ -175,6 +175,34 @@ body{
 }
 
 
+/* style.css の末尾など、適切な位置に追加 */
+
+/* 太陽地球環境データのウィジェットを横並びにする */
+.solar-widgets {
+
+
+    display: flex; /* Flexboxを有効にして子要素を横並びにする */
+
+    justify-content: flex-start; /* ★★★ 修正: 左寄せにする ★★★ */
+
+    align-items: flex-start; /* 子要素の配置を上端に揃える（念のため） */
+    gap: 2rem; /* 2つのウィジェットの間に間隔を空ける */
+    margin: 1rem auto 2rem; /* 上下の余白と中央揃え */
+    /* .container の padding:2rem 0; はすでに適用されています */
+
+    /* ウィジェット群の左右に、メインコンテンツと同じ余白を確保 */
+    padding: 0 6rem;
+
+}
+
+/* 画面が狭いとき（例: タブレットやスマホ）は縦に積み重ねる */
+@media (max-width: 800px) {
+    .solar-widgets {
+        flex-direction: column; /* 要素を縦（列）に積み重ねる */
+        align-items: center; /* 縦に積んだときも中央揃えにする */
+    }
+}
+
 
 
 
