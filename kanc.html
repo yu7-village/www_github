@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>監視カメラ - ごった煮</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <main class="container">
+    <h1>サイト情報</h1>
+    <section class="card">
+      <h3>監視カメラ</h3>
+      <p style="white-space: pre-wrap;">監視カメラのサイトです
+カメラを起動するボタンをクリックし
+映像と操作パネルを開くをクリックしてください</p>
+      <a href="https://yu7-village.github.io/kanC/" target="_blank" rel="noopener noreferrer" class="btn">
+          新しいタブで監視カメラサイトを開く
+      </a>
+    </section>
+
+    <div style="margin-top: 2rem; text-align: center;">
+      <a href="index.html" class="btn">ホームに戻る</a>
+    </div>
+  </main>
+
+  <script>
+    fetch('nav.html').then(r => r.text()).then(d => {
+      document.getElementById('nav-placeholder').innerHTML = d;
+      document.querySelector('.menu-toggle').addEventListener('click', () => {
+        document.querySelector('.side-nav').classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
