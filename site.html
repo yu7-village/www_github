@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -8,32 +7,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button class="menu-toggle">☰</button>
-  <nav class="side-nav">
-    <ul>
-      <li><a href="index.html">ホーム</a></li>
-      <li><a href="features.html">短波受信機</a></li>
-      <li><a href="site.html">ビデオ通話</a></li> <li><a href="po.html">ポケモン図鑑</a></li>
-      <li><a href="links.html">リンク</a></li>
-    </ul>
-  </nav>
-
+  <div id="nav-placeholder"></div>
   <main class="container">
     <h1>サイト情報</h1>
     <section class="card">
-      <h3>ビデオ通話</h3> <p>ビデオ通話ができます。</p> <p>立ち上げてサーバー準備完了が出たら入室ボタン押してください。</p>
+      <h3>ビデオ通話</h3>
+      <p>ビデオ通話ができます。</p>
+      <p>立ち上げてサーバー準備完了が出たら入室ボタン押してください。</p>
       <a href="https://rose-nyd6.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn">
-          新しいタブでビデオ通話を開始する </a>
+          新しいタブでビデオ通話を開始する
+      </a>
     </section>
-
-    <div style="margin-top: 2rem; text-align: center;">
-      <a href="index.html" class="btn">ホームに戻る</a>
-    </div>
+    <div style="margin-top: 2rem; text-align: center;"><a href="index.html" class="btn">ホームに戻る</a></div>
   </main>
-
   <script>
-    document.querySelector('.menu-toggle').addEventListener('click', () => {
-      document.querySelector('.side-nav').classList.toggle('open');
+    fetch('nav.html').then(r => r.text()).then(d => {
+      document.getElementById('nav-placeholder').innerHTML = d;
+      document.querySelector('.menu-toggle').addEventListener('click', () => {
+        document.querySelector('.side-nav').classList.toggle('open');
+      });
     });
   </script>
 </body>

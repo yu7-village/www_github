@@ -6,12 +6,11 @@
   --muted: #6b7280;
   --max-width: 1100px;
 }
-
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: system-ui, -apple-system, sans-serif;
   color: var(--text);
   background-color: var(--bg);
   background-image: url("./ufo.png");
@@ -21,19 +20,15 @@ body {
   background-attachment: fixed;
   line-height: 1.6;
 }
-
 .container {
   width: calc(100% - 200px);
   max-width: var(--max-width);
   margin: 0 0 0 200px;
   padding: 2rem;
 }
-
 .side-nav {
   position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; top: 0; bottom: 0;
   width: 200px;
   background: transparent;
   padding: 8rem 1rem 2rem;
@@ -43,60 +38,21 @@ body {
 .side-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .side-nav a { display: block; padding: 0.5rem 0.75rem; color: #f97316; text-decoration: none; border-radius: 6px; font-weight: bold; }
 .side-nav a:hover { background: rgba(37, 99, 235, 0.08); color: var(--primary); }
-
 .menu-toggle {
   display: none;
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.5rem 0.8rem;
-  border-radius: 4px;
-  cursor: pointer;
-  z-index: 100;
+  position: fixed; top: 1rem; right: 1rem;
+  background: var(--primary); color: white; border: none; padding: 0.5rem 0.8rem; border-radius: 4px; cursor: pointer; z-index: 100;
 }
-
-.hero {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.1));
-  padding: 4rem 0;
-  text-align: center;
-}
+.hero { background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.1)); padding: 4rem 0; text-align: center; }
 .hero h2 { font-size: 1.8rem; color: #ffffff; margin: 0; }
 .hero p { color: #d1d5db; }
-
-.card {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  margin-bottom: 1rem;
-}
-.btn {
-  display: inline-block;
-  background: var(--primary);
-  color: #fff;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
+.card { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+.btn { display: inline-block; background: var(--primary); color: #fff; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; }
 .receiver-btn { background-color: #6B8E23; color: #000; }
-
-.solar-widgets {
-  display: flex;
-  gap: 2rem;
-  margin: 1rem 0;
-  padding: 0 2rem;
-}
-
+.solar-widgets { display: flex; gap: 2rem; margin: 1rem 0; padding: 0 2rem; }
 @media (max-width: 600px) {
   .menu-toggle { display: block; }
-  .side-nav {
-    transform: translateX(-100%);
-    background: rgba(15, 23, 42, 0.95);
-  }
+  .side-nav { transform: translateX(-100%); background: rgba(15, 23, 42, 0.95); }
   .side-nav.open { transform: translateX(0); }
   .container { width: 100%; margin: 0; padding-top: 5rem; }
   .solar-widgets { flex-direction: column; align-items: center; }

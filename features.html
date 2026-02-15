@@ -2,44 +2,28 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>短波受信機 - ごった煮</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button class="menu-toggle">☰</button>
-  <nav class="side-nav">
-    <ul>
-      <li><a href="index.html">ホーム</a></li>
-      <li><a href="features.html">短波受信機</a></li>
-      <li><a href="site.html">カメラ</a></li>
-      <li><a href="po.html">ポケモン図鑑</a></li>
-      <li><a href="links.html">リンク</a></li>
-    </ul>
-  </nav>
-
+  <div id="nav-placeholder"></div>
   <main class="container">
     <h1>短波受信機</h1>
-    <div style="margin: 2rem 0; text-align: center;">
-      <a href="radio/Rindex.html" class="btn receiver-btn">受信機GO</a>
-    </div>
-
+    <div style="margin: 2rem 0; text-align: center;"><a href="radio/Rindex.html" class="btn receiver-btn">受信機GO</a></div>
     <section id="usage">
       <h3>使い方</h3>
       <pre id="usage-text" class="card" style="white-space: pre-wrap;">読み込み中…</pre>
     </section>
-
-    <div style="text-align: center; margin-top: 2rem;">
-      <a href="index.html" class="btn">ホームに戻る</a>
-    </div>
+    <div style="text-align: center; margin-top: 2rem;"><a href="index.html" class="btn">ホームに戻る</a></div>
   </main>
-
   <script>
-    document.querySelector('.menu-toggle').addEventListener('click', () => {
-      document.querySelector('.side-nav').classList.toggle('open');
+    fetch('nav.html').then(r => r.text()).then(d => {
+      document.getElementById('nav-placeholder').innerHTML = d;
+      document.querySelector('.menu-toggle').addEventListener('click', () => {
+        document.querySelector('.side-nav').classList.toggle('open');
+      });
     });
-    fetch('radio/使用方法.txt')
-      .then(resp => resp.text())
+    fetch('radio/使用方法.txt').then(resp => resp.text())
       .then(text => { document.getElementById('usage-text').textContent = text; })
       .catch(() => { document.getElementById('usage-text').textContent = 'ファイルが読み込めませんでした。'; });
   </script>

@@ -14,15 +14,7 @@
   </script>
 </head>
 <body>
-  <button class="menu-toggle">☰</button>
-  <nav class="side-nav">
-    <ul>
-      <li><a href="index.html">ホーム</a></li>
-      <li><a href="features.html">短波受信機</a></li>
-      <li><a href="site.html">ビデオ通話</a></li> <li><a href="po.html">ポケモン図鑑</a></li>
-      <li><a href="links.html">リンク</a></li>
-    </ul>
-  </nav>
+  <div id="nav-placeholder"></div>
 
   <main>
     <section class="hero">
@@ -31,7 +23,6 @@
         <p>ごった煮ホームページへようこそ</p>
       </div>
     </section>
-
     <div class="container">
       <h3>特徴</h3>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
@@ -40,13 +31,14 @@
           <p>疑似受信機でCW受信できます。</p>
         </article>
         <article class="card">
-          <h4>ビデオ通話</h4> <p>ビデオ通話ができます。</p> </article>
+          <h4>ビデオ通話</h4>
+          <p>ビデオ通話ができます。</p>
+        </article>
         <article class="card">
           <h4>ポケモン図鑑</h4>
           <p>ポケモンのデータを検索できます。</p>
         </article>
       </div>
-
       <div class="solar-widgets">
         <a href="https://www.hamqsl.com/solar.html"><img src="https://www.hamqsl.com/solarsystem.php" alt="Solar"></a>
         <a href="https://www.hamqsl.com/solar.html"><img src="https://www.hamqsl.com/solarbc.php" alt="Propagation"></a>
@@ -59,10 +51,13 @@
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.querySelector('.menu-toggle').addEventListener('click', () => {
-      document.querySelector('.side-nav').classList.toggle('open');
+    fetch('nav.html').then(r => r.text()).then(d => {
+      document.getElementById('nav-placeholder').innerHTML = d;
+      document.querySelector('.menu-toggle').addEventListener('click', () => {
+        document.querySelector('.side-nav').classList.toggle('open');
+      });
     });
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
