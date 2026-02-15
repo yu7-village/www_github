@@ -1,89 +1,47 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-37YYKYS3HY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-37YYKYS3HY');
-</script>
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>特徴 - シンプルで使いやすいホームページ</title>
-  <style>
-    /* 受信機GOボタンのスタイル */
-    .receiver-btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #6B8E23; /* 明るいオリーブドラブ色 */
-      color: black; /* 黒文字 */
-      text-decoration: none;
-      border-radius: 5px; /* 角を丸める */
-      border: 2px solid #6B8E23; /* ボタンの枠線 */
-      transition: background-color 0.3s, color 0.3s; /* ホバー時の効果 */
-    }
-
-    .receiver-btn:hover {
-      background-color: #4F4F2F; /* ホバー時の色 */
-      color: white; /* ホバー時の文字色 */
-    }
-  </style>
+  <title>短波受信機 - ごった煮</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <nav class="side-nav" aria-label="サイト内目次">
-      <ul>
-        <!-- ナビゲーションは削除されています -->
-      </ul>
-    </nav>
-  </header>
+  <button class="menu-toggle">☰</button>
+  <nav class="side-nav">
+    <ul>
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="features.html">短波受信機</a></li>
+      <li><a href="site.html">カメラ</a></li>
+      <li><a href="po.html">ポケモン図鑑</a></li>
+      <li><a href="links.html">リンク</a></li>
+    </ul>
+  </nav>
 
-  <main>
+  <main class="container">
     <h1>短波受信機</h1>
-    
-    <section class="features">
-      <div class="grid">
-        <!-- 上側の「使い方」カードを削除しました -->
-      </div>
-    </section>
-
-    <!-- 受信機GOボタンを追加 -->
-    <div style="margin-top: 2rem; text-align: center;">
+    <div style="margin: 2rem 0; text-align: center;">
       <a href="radio/Rindex.html" class="btn receiver-btn">受信機GO</a>
     </div>
 
-    <section id="usage" class="container site-info">
+    <section id="usage">
       <h3>使い方</h3>
       <pre id="usage-text" class="card" style="white-space: pre-wrap;">読み込み中…</pre>
     </section>
 
-    <div style="margin-top: 2rem; text-align: center;">
+    <div style="text-align: center; margin-top: 2rem;">
       <a href="index.html" class="btn">ホームに戻る</a>
     </div>
   </main>
 
-  <footer class="site-footer">
-  </footer>
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('.side-nav').classList.toggle('open');
+    });
+    fetch('radio/使用方法.txt')
+      .then(resp => resp.text())
+      .then(text => { document.getElementById('usage-text').textContent = text; })
+      .catch(() => { document.getElementById('usage-text').textContent = 'ファイルが読み込めませんでした。'; });
+  </script>
 </body>
 </html>
-
-<script>
-  // radio\使用方法.txt を読み込み、表示する（同一サーバー上に配置されていること）
-  (function(){
-    const target = document.getElementById('usage-text');
-    if (!target) return;
-    fetch('radio/使用方法.txt')
-      .then(resp => {
-        if (!resp.ok) throw new Error('ファイルが見つかりません: ' + resp.status);
-        return resp.text();
-      })
-      .then(text => { target.textContent = text; })
-      .catch(err => { target.textContent = '読み込みエラー: ' + err.message; });
-  })();
-
-</script>

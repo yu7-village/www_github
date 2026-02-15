@@ -1,49 +1,41 @@
 <!doctype html>
 <html lang="ja">
 <head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-37YYKYS3HY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-37YYKYS3HY');
-</script>
-
-  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ごった煮へようこそ</title>
   <link rel="stylesheet" href="style.css" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-37YYKYS3HY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-37YYKYS3HY');
+  </script>
 </head>
 <body>
-  <header class="site-header">
-    <nav class="side-nav" aria-label="サイト内目次">
-      <ul>
-        <li><a href="index.html">ホーム</a></li>
-        <li><a href="features.html">短波受信機</a></li>
-        <li><a href="site.html">カメラ</a></li>
-        <li><a href="po.html">ポケモン図鑑</a></li>
-        <li><a href="links.html">リンク</a></li> <!-- リンクページへのリンク -->
-      </ul>
-    </nav>
-  </header>
+  <button class="menu-toggle">☰</button>
+  <nav class="side-nav">
+    <ul>
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="features.html">短波受信機</a></li>
+      <li><a href="site.html">カメラ</a></li>
+      <li><a href="po.html">ポケモン図鑑</a></li>
+      <li><a href="links.html">リンク</a></li>
+    </ul>
+  </nav>
 
   <main>
-    <section id="home" class="hero">
-      <div class="container hero-inner">
+    <section class="hero">
+      <div class="container">
         <h2>ごった煮</h2>
         <p>ごった煮ホームページへようこそ</p>
-        <!-- 以下のボタンを削除しました -->
-        <!-- <a class="btn" href="#site">サイト情報を見る</a> -->
       </div>
     </section>
 
-    <section id="features" class="container features">
+    <div class="container">
       <h3>特徴</h3>
-      <div class="grid">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
         <article class="card">
           <h4>短波受信機</h4>
           <p>疑似受信機でCW受信できます。</p>
@@ -54,49 +46,26 @@
         </article>
         <article class="card">
           <h4>ポケモン図鑑</h4>
-          <p>ポケモンのデータを検索できます。イラストもあり。</p>
+          <p>ポケモンのデータを検索できます。</p>
         </article>
       </div>
-    </section>
 
-
-    <div class="solar-widgets container">
-        <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!"><img src="https://www.hamqsl.com/solarsystem.php"></a>
-        <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!"><img src="https://www.hamqsl.com/solarbc.php"></a>
+      <div class="solar-widgets">
+        <a href="https://www.hamqsl.com/solar.html"><img src="https://www.hamqsl.com/solarsystem.php" alt="Solar"></a>
+        <a href="https://www.hamqsl.com/solar.html"><img src="https://www.hamqsl.com/solarbc.php" alt="Propagation"></a>
+      </div>
     </div>
-
-
-    <section id="site" class="container site-info">
-      <h3>サイト情報</h3>
-      <p>興味のあることを書き散らすサイトです</p>
-    </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© <span id="year"></span> ごった煮. All rights reserved.</p>
-    </div>
+  <footer class="container" style="text-align: center; border-top: 1px solid #e6eef6; margin-top: 2rem;">
+    <p>© <span id="year"></span> ごった煮. All rights reserved.</p>
   </footer>
 
   <script>
-    // フッターの年表示と、モバイル時にサイドナビをトグルする処理
     document.getElementById('year').textContent = new Date().getFullYear();
-    const toggle = document.querySelector('.menu-toggle');
-    const sideNav = document.querySelector('.side-nav');
-    const heroH2 = document.querySelector('.hero h2');
-
-    toggle.addEventListener('click', () => sideNav.classList.toggle('open'));
-
-    // サイドナビを hero の見出し（"シンプルで使いやすいホームページ"）の位置まで下げる
-    function alignSideNavToHero(){
-      if (!sideNav || !heroH2) return;
-      const rect = heroH2.getBoundingClientRect();
-      sideNav.style.top = Math.max(0, Math.round(rect.top)) + 'px';
-    }
-
-    window.addEventListener('load', alignSideNavToHero);
-    window.addEventListener('resize', alignSideNavToHero);
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('.side-nav').classList.toggle('open');
+    });
   </script>
 </body>
-
 </html>

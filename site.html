@@ -1,48 +1,32 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-37YYKYS3HY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-37YYKYS3HY');
-</script>
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>サイト情報 - シンプルで使いやすいホームページ</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>カメラ情報 - ごった煮</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <button class="menu-toggle">☰</button>
   <nav class="side-nav">
     <ul>
       <li><a href="index.html">ホーム</a></li>
-      <li><a href="features.html">特徴</a></li>
-      <li><a href="site.html">サイト情報</a></li>
+      <li><a href="features.html">短波受信機</a></li>
+      <li><a href="site.html">カメラ</a></li>
+      <li><a href="po.html">ポケモン図鑑</a></li>
       <li><a href="links.html">リンク</a></li>
     </ul>
   </nav>
 
-  <header class="site-header">
-  </header>
-
   <main class="container">
     <h1>サイト情報</h1>
-    
-    <section class="site-info">
-      <h3>CAMERA</h3>
-      <p>窓からの画像です</p>
-      <p>立ち上げてサーバー準備完了が出たら入室ボタン押してください</p>
-　　　<p>https://rose-nyd6.onrender.com/</p>
-
-<a href="https://rose-nyd6.onrender.com/" target="_blank" rel="noopener noreferrer">
-    新しいタブでカメラサイトを開く
-</a>
-
+    <section class="card">
+      <h3>Live CAMERA</h3>
+      <p>窓からの画像です。</p>
+      <p>立ち上げてサーバー準備完了が出たら入室ボタン押してください。</p>
+      <a href="https://rose-nyd6.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn">
+          新しいタブでカメラサイトを開く
+      </a>
     </section>
 
     <div style="margin-top: 2rem; text-align: center;">
@@ -50,8 +34,10 @@
     </div>
   </main>
 
-  <footer class="site-footer">
-  </footer>
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('.side-nav').classList.toggle('open');
+    });
+  </script>
 </body>
-
 </html>

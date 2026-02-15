@@ -1,208 +1,110 @@
-:root{
-  --bg:#f7f9fb;
-  --primary:#2563eb;
-  --accent:#06b6d4;
-  --text:#0f172a;
-  --muted:#6b7280;
-  --max-width:1100px;
+:root {
+  --bg: #f7f9fb;
+  --primary: #2563eb;
+  --accent: #06b6d4;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --max-width: 1100px;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-  color:var(--text);
-  background-color:var(--bg);
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: var(--text);
+  background-color: var(--bg);
   background-image: url("./ufo.png");
   background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  line-height:1.6;
+  line-height: 1.6;
 }
 
-.container{
-  width:calc(100% - 200px);
-  max-width:var(--max-width);
-  margin:0 0 0 200px;
-  padding:2rem 0;
+/* レイアウト構造 */
+.container {
+  width: calc(100% - 200px);
+  max-width: var(--max-width);
+  margin: 0 0 0 200px;
+  padding: 2rem;
 }
 
-/* Header */
-.site-header{
-  background: transparent;
-  border-bottom: none;
-  position:sticky;
-  top:0;
-  left:200px;
-  right:0;
-  z-index:50;
-  box-shadow:none;
-}
-.header-inner{display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0}
-.logo{margin:0;font-size:1.25rem;color:var(--primary)}
-.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem}
-.nav a{text-decoration:none;color:var(--text);padding:0.5rem 0.75rem;border-radius:6px}
-.nav a:hover{background:rgba(37,99,235,0.08);color:var(--primary)}
-.menu-toggle{display:none;border:0;background:transparent;font-size:1.25rem}
-
-/* Hero */
-.hero{
-  background:linear-gradient(135deg, rgba(37,99,235,0.08), rgba(6,182,212,0.05));
-  padding:4rem 0;
-  text-align:center;
-}
-.hero h2{
-  font-size:1.8rem;
-  margin:0 0 0.5rem;
-  color:#ffffff;
-}
-.hero p{color:var(--muted);margin:0 0 1rem}
-
-/* Buttons */
-.btn{
-  display:inline-block;
-  background:var(--primary);
-  color:#fff;
-  padding:0.6rem 1rem;
-  border-radius:8px;
-  text-decoration:none;
-  border:0;
-  cursor:pointer;
-}
-.btn:hover{background:#1e40af}
-
-/* Features */
-.features h3, .site-info h3{margin-top:0}
-.site-info h3{color:#ffffff}
-.site-info p{color:#d1d5db}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1rem;
-  margin-top:1rem;
-}
-.card{
-  background:#fff;
-  padding:1rem;
-  border-radius:8px;
-  box-shadow:0 1px 3px rgba(15,23,42,0.05);
-}
-
-/* Contact form */
-.contact-form{display:grid;gap:0.75rem;max-width:640px}
-.contact-form label{display:block;font-size:0.9rem;color:var(--muted)}
-.contact-form input, .contact-form textarea{
-  width:100%;padding:0.6rem;border:1px solid #e6eef6;border-radius:6px;background:#fff;
-}
-.contact-form button{justify-self:start}
-
-/* Footer */
-.site-footer{border-top:1px solid #e6eef6;background:#fff;padding:1rem 0;margin-top:2rem}
-.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.footer-nav a{margin-left:1rem;color:var(--muted);text-decoration:none}
-
-/* 左側サイドナビ */
-.side-nav{
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  width:200px;
-  /* 完全に透明にする */
-  background: transparent;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  border-right: none;
-  padding:2rem 1rem;
-  z-index:60;
-  box-shadow: none;
-}
-.side-nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.5rem}
-.side-nav a{display:block;padding:0.5rem 0.75rem;color:#f97316;text-decoration:none;border-radius:6px}
-.side-nav a:hover{background:rgba(37,99,235,0.08);color:var(--primary)}
-
-/* コンテンツをサイドナビ分だけ右に寄せる */
-.container{
-  width:calc(100% - 200px);
-  max-width:var(--max-width);
-  margin:0 0 0 200px;
-  padding:2rem 0;
-}
-
-/* ヘッダー（上部の白い背景を削除） */
-.site-header{
-  background: transparent;
-  border-bottom: none;
-  position:sticky;
-  top:0;
-  left:200px;
-  right:0;
-  z-index:50;
-  box-shadow:none;
-}
-.header-inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0.5rem 0;
-  background:transparent;
-}
-
-/* Responsive */
-@media (max-width:800px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:600px){
-  .grid{grid-template-columns:1fr}
-  .nav{display:none}
-  .menu-toggle{display:block}
-  .nav.open{display:block;position:absolute;left:0;right:0;background:#fff;padding:1rem;border-top:1px solid #e6eef6}
-  .nav.open ul{flex-direction:column;gap:0.5rem}
-  .footer-inner{flex-direction:column;align-items:flex-start}
-}
-
-.side-nav ul li:first-child {
-  margin-top: 3rem;
-}
-
+/* サイドナビゲーション */
 .side-nav {
-  padding-top: 8rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  background: transparent;
+  padding: 8rem 1rem 2rem; /* 上部に余白 */
+  z-index: 60;
+  transition: transform 0.3s ease;
+}
+.side-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.side-nav a { display: block; padding: 0.5rem 0.75rem; color: #f97316; text-decoration: none; border-radius: 6px; font-weight: bold; }
+.side-nav a:hover { background: rgba(37, 99, 235, 0.08); color: var(--primary); }
 
+/* モバイルメニューボタン */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 100;
 }
 
+/* ヒーローセクション */
+.hero {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.1));
+  padding: 4rem 0;
+  text-align: center;
+}
+.hero h2 { font-size: 1.8rem; color: #ffffff; margin: 0; }
+.hero p { color: #d1d5db; }
 
-/* style.css の末尾など、適切な位置に追加 */
+/* カード & ボタン */
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+}
+.btn {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.receiver-btn { background-color: #6B8E23; color: #000; }
 
-/* 太陽地球環境データのウィジェットを横並びにする */
+/* 太陽データウィジェット */
 .solar-widgets {
-
-
-    display: flex; /* Flexboxを有効にして子要素を横並びにする */
-
-    justify-content: flex-start; /* ★★★ 修正: 左寄せにする ★★★ */
-
-    align-items: flex-start; /* 子要素の配置を上端に揃える（念のため） */
-    gap: 2rem; /* 2つのウィジェットの間に間隔を空ける */
-    margin: 1rem auto 2rem; /* 上下の余白と中央揃え */
-    /* .container の padding:2rem 0; はすでに適用されています */
-
-    /* ウィジェット群の左右に、メインコンテンツと同じ余白を確保 */
-    padding: 0 6rem;
-
+  display: flex;
+  gap: 2rem;
+  margin: 1rem 0;
+  padding: 0 2rem;
 }
 
-/* 画面が狭いとき（例: タブレットやスマホ）は縦に積み重ねる */
-@media (max-width: 800px) {
-    .solar-widgets {
-        flex-direction: column; /* 要素を縦（列）に積み重ねる */
-        align-items: center; /* 縦に積んだときも中央揃えにする */
-    }
+/* レスポンシブ設定 */
+@media (max-width: 600px) {
+  .menu-toggle { display: block; }
+  .side-nav {
+    transform: translateX(-100%);
+    background: rgba(15, 23, 42, 0.95);
+  }
+  .side-nav.open { transform: translateX(0); }
+  .container { width: 100%; margin: 0; padding-top: 5rem; }
+  .solar-widgets { flex-direction: column; align-items: center; }
 }
-
-
-
-
